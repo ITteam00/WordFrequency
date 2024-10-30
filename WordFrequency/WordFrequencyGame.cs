@@ -12,19 +12,17 @@ namespace WordFrequency
             {
                 return inputStr + " 1";
             }
-            else
-            {
-                List<Input> inputList = CreateInputList(inputStr);
 
-                //get the map for the next step of sizing the same word
-                Dictionary<string, List<Input>> map = GetListMap(inputList);
+            List<Input> inputList = CreateInputList(inputStr);
 
-                inputList = SortList(map);
+            //get the map for the next step of sizing the same word
+            Dictionary<string, List<Input>> map = GetListMap(inputList);
 
-                List<string> strList = GetWordFrequencyList(inputList);
+            inputList = SortList(map);
 
-                return string.Join("\n", strList.ToArray());
-            }
+            List<string> strList = GetWordFrequencyList(inputList);
+
+            return string.Join("\n", strList.ToArray());
         }
 
         private static List<string> GetWordFrequencyList(List<Input> inputList)
