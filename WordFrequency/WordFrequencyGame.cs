@@ -48,7 +48,7 @@ namespace WordFrequencyStorage
 
         private static List<WordFrequency> splitInputString(string inputStr)
         {
-            string[] arr = Regex.Split(inputStr, @"\s+");
+            string[] arr = inputStr.Split(new char[] { ' ', '\t', '\n', '\r' }).Where(word => !string.IsNullOrWhiteSpace(word)).ToArray();
 
             List<WordFrequency> inputList = new List<WordFrequency>();
             foreach (var s in arr)
