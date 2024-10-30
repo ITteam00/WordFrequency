@@ -11,7 +11,7 @@
             this.count = i;
         }
 
-        public string Value
+        public string Word
         {
             get { return this.word; }
         }

@@ -24,7 +24,7 @@ namespace WordFrequency
 
             foreach (Input w in groupedInputList)
             {
-                string s = w.Value + SEPARATOR + w.WordCount;
+                string s = w.Word + SEPARATOR + w.WordCount;
                 formattedWordCounts.Add(s);
             }
             string formattedResult = string.Join("\n", formattedWordCounts.ToArray());
@@ -48,7 +48,7 @@ namespace WordFrequency
 
         private Dictionary<string, List<Input>> GroupInputsByValue(List<Input> inputList)
         {
-            var groupedResult = inputList.GroupBy(input => input.Value).ToDictionary(group => group.Key, group => group.ToList());
+            var groupedResult = inputList.GroupBy(input => input.Word).ToDictionary(group => group.Key, group => group.ToList());
             return groupedResult;
         }
     }
