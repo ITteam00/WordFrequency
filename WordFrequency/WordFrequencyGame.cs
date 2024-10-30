@@ -18,7 +18,7 @@ namespace WordFrequency
             return formattedResult;
         }
 
-        private string FormatInputs(List<Input> groupedInputList)
+        public string FormatInputs(List<Input> groupedInputList)
         {
             List<string> formattedWordCounts = new List<string>();
 
@@ -31,14 +31,14 @@ namespace WordFrequency
             return formattedResult;
         }
 
-        private List<Input> GetGroupInputList(Dictionary<string, List<Input>> map)
+        public List<Input> GetGroupInputList(Dictionary<string, List<Input>> map)
         {
             var result =  map.Select(entry => new Input(entry.Key, entry.Value.Count)).ToList();
             result.Sort((w1, w2) => w2.WordCount - w1.WordCount);
             return result;
         }
 
-        private List<Input> GetInputList(string inputStr)
+        public List<Input> GetInputList(string inputStr)
         {
             string[] splitResult = Regex.Split(inputStr, @"\s+");
             List<Input> inputList = inputList = splitResult.Select(word => new Input(word, 1)).ToList();
@@ -46,7 +46,7 @@ namespace WordFrequency
             return inputList;
         }
 
-        private Dictionary<string, List<Input>> GroupInputsByValue(List<Input> inputList)
+        public Dictionary<string, List<Input>> GroupInputsByValue(List<Input> inputList)
         {
             var groupedResult = inputList.GroupBy(input => input.Word).ToDictionary(group => group.Key, group => group.ToList());
             return groupedResult;
