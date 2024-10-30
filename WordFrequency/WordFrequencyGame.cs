@@ -17,26 +17,16 @@ namespace WordFrequency
             }
             else
             {
-                //split the input string with 1 to n pieces of spaces
-                List<Input> inputList = (from word in wordList
-                                         let input = new Input(word, 1)
-                                         select input).ToList();
-
-                //get the map for the next step of sizing the same word
-                Dictionary<string, List<Input>> wordCountsMap = GetListMap(inputList);
-
-                List<Input> wordFrequency = (from word in wordCountsMap
-                                    let input = new Input(word.Key, word.Value.Count)
-                                    select input).ToList();
-
-                wordFrequency.Sort((w1, w2) => w2.WordCount - w1.WordCount);
+                var wordFrequency = wordList.GroupBy(word => word)
+                    .Select(group => new Input(group.Key, group.Count()))
+                    .OrderByDescending(input => input.WordCount).ToList();
 
                 List<string> strList = new List<string>();
 
                 //stringJoiner joiner = new stringJoiner("\n");
-                foreach (Input w in inputList)
+                foreach (Input word in wordFrequency)
                 {
-                    string s = w.Value + " " + w.WordCount;
+                    string s = word.Value + " " + word.WordCount;
                     strList.Add(s);
                 }
 
