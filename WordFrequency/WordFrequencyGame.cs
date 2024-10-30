@@ -6,13 +6,15 @@ namespace WordFrequency
 {
     public class WordFrequencyGame
     {
+        private const string SEPARATOR = " ";
+
         public string GetResult(string inputStr)
         {
             string[] splitResult = Regex.Split(inputStr, @"\s+");
 
             if (splitResult.Length == 1)
             {
-                return inputStr + " 1";
+                return inputStr + SEPARATOR +"1";
             }
             else
             {
@@ -31,7 +33,7 @@ namespace WordFrequency
 
             foreach (Input w in groupedInputList)
             {
-                string s = w.Value + " " + w.WordCount;
+                string s = w.Value + SEPARATOR + w.WordCount;
                 formattedWordCounts.Add(s);
             }
             string formattedResult = string.Join("\n", formattedWordCounts.ToArray());
