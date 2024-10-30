@@ -66,14 +66,9 @@ namespace WordFrequency
             {
                 if (!map.ContainsKey(input.Value))
                 {
-                    List<Input> arr = new List<Input>();
-                    arr.Add(input);
-                    map.Add(input.Value, arr);
+                    map[input.Value] = new List<Input>();
                 }
-                else
-                {
-                    map[input.Value].Add(input);
-                }
+                map[input.Value].Add(input);
             }
 
             return map;
