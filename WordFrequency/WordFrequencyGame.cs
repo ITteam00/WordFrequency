@@ -3,7 +3,6 @@
     public class WordFrequencyGame
     {
         private const int INITIAL_FREQUENCY = 1;
-        private const string INITIAL_FREQUENCY_STRING = " 1";
         public string GetResult(string inputStr)
         {
             List<string> filteredList = inputStr.Split(new char[] { ' ', '\t', '\n', '\r' })
