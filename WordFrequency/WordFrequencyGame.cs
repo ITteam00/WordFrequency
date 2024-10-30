@@ -21,17 +21,24 @@ namespace WordFrequency
 
                 inputList = SortList(map);
 
-                List<string> strList = new List<string>();
-
-                //stringJoiner joiner = new stringJoiner("\n");
-                foreach (Input w in inputList)
-                {
-                    string s = w.Value + " " + w.WordCount;
-                    strList.Add(s);
-                }
+                List<string> strList = GetWordFrequencyList(inputList);
 
                 return string.Join("\n", strList.ToArray());
             }
+        }
+
+        private static List<string> GetWordFrequencyList(List<Input> inputList)
+        {
+            List<string> strList = new List<string>();
+
+            //stringJoiner joiner = new stringJoiner("\n");
+            foreach (Input w in inputList)
+            {
+                string s = w.Value + " " + w.WordCount;
+                strList.Add(s);
+            }
+
+            return strList;
         }
 
         private static List<Input> SortList(Dictionary<string, List<Input>> map)
