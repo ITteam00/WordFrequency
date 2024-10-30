@@ -8,7 +8,7 @@ namespace WordFrequency
     {
         public string GetResult(string inputStr)
         {
-            if (Regex.Split(inputStr, @"\s+").Length == 1)
+            if (inputStr.Length == 1)
             {
                 return inputStr + " 1";
             }
