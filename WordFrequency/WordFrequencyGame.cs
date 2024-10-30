@@ -16,18 +16,11 @@ namespace WordFrequency
             }
             else
             {
-                //split the input string with 1 to n pieces of spaces
-
                 var inputList = GetInputList(splitResult);
-
-                //get the map for the next step of sizing the same word
                 Dictionary<string, List<Input>> groupedInputs = GroupInputsByValue(inputList);
                 List<Input> groupedInputList = GetGroupInputList(groupedInputs);
 
-                groupedInputList.Sort((w1, w2) => w2.WordCount - w1.WordCount);
-
                 string formattedResult = formatInputs(groupedInputList);
-
                 return formattedResult;
             }
         }
@@ -36,20 +29,20 @@ namespace WordFrequency
         {
             List<string> formattedWordCounts = new List<string>();
 
-            //stringJoiner joiner = new stringJoiner("\n");
             foreach (Input w in groupedInputList)
             {
                 string s = w.Value + " " + w.WordCount;
                 formattedWordCounts.Add(s);
             }
-
             string formattedResult = string.Join("\n", formattedWordCounts.ToArray());
             return formattedResult;
         }
 
         private static List<Input> GetGroupInputList(Dictionary<string, List<Input>> map)
         {
-            return map.Select(entry => new Input(entry.Key, entry.Value.Count)).ToList();
+            var result =  map.Select(entry => new Input(entry.Key, entry.Value.Count)).ToList();
+            result.Sort((w1, w2) => w2.WordCount - w1.WordCount);
+            return result;
         }
 
         private static List<Input> GetInputList(string[] splitResult)
@@ -69,7 +62,6 @@ namespace WordFrequency
             Dictionary<string, List<Input>> map = new Dictionary<string, List<Input>>();
             foreach (var input in inputList)
             {
-                //       map.computeIfAbsent(input.getValue(), k -> new ArrayList<>()).add(input);
                 if (!map.ContainsKey(input.Value))
                 {
                     List<Input> arr = new List<Input>();
