@@ -8,9 +8,9 @@ namespace WordFrequency
     {
         public string GetResult(string inputStr)
         {
-            List<Input> inputList = CreateInputList(inputStr);
+            List<WordCount> inputList = CreateInputList(inputStr);
 
-            List<Input> InputCountList = AggregateWordCounts(inputList);
+            List<WordCount> InputCountList = AggregateWordCounts(inputList);
 
             inputList = SortList(InputCountList);
 
@@ -19,28 +19,28 @@ namespace WordFrequency
             return string.Join("\n", strList.ToArray());
         }
 
-        private static List<string> GetWordFrequencyList(List<Input> inputList)
+        private static List<string> GetWordFrequencyList(List<WordCount> inputList)
         {
-            return inputList.Select(Word => $"{Word.Value} {Word.WordCount}").ToList();
+            return inputList.Select(curWord => $"{curWord.Word} {curWord.Count}").ToList();
         }
 
-        private static List<Input> SortList(List<Input> inputList)
+        private static List<WordCount> SortList(List<WordCount> inputList)
         {
-            return inputList.OrderByDescending(Word => Word.WordCount).ToList();
+            return inputList.OrderByDescending(curWord => curWord.Count).ToList();
 
         }
 
-        private static List<Input> CreateInputList(string inputStr)
+        private static List<WordCount> CreateInputList(string inputStr)
         {
             string[] arr = Regex.Split(inputStr, @"\s+");
 
-            return arr.Select(s => new Input(s, 1)).ToList();
+            return arr.Select(s => new WordCount(s, 1)).ToList();
         }
 
-        private static List<Input> AggregateWordCounts(List<Input> inputList)
+        private static List<WordCount> AggregateWordCounts(List<WordCount> inputList)
         {
-            return inputList.GroupBy(input => input.Value)
-                            .Select(group => new Input(group.Key, group.Count()))
+            return inputList.GroupBy(curWord => curWord.Word)
+                            .Select(group => new WordCount(group.Key, group.Count()))
                             .ToList();
         }
     }
