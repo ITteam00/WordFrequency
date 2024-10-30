@@ -41,29 +41,15 @@ namespace WordFrequency
         private List<Input> GetInputList(string inputStr)
         {
             string[] splitResult = Regex.Split(inputStr, @"\s+");
-            List<Input> inputList = new List<Input>();
+            List<Input> inputList = inputList = splitResult.Select(word => new Input(word, 1)).ToList();
 
-            foreach (var s in splitResult)
-            {
-                Input input = new Input(s, 1);
-                inputList.Add(input);
-            }
             return inputList;
         }
 
         private Dictionary<string, List<Input>> GroupInputsByValue(List<Input> inputList)
         {
-            Dictionary<string, List<Input>> map = new Dictionary<string, List<Input>>();
-            foreach (var input in inputList)
-            {
-                if (!map.ContainsKey(input.Value))
-                {
-                    map[input.Value] = new List<Input>();
-                }
-                map[input.Value].Add(input);
-            }
-
-            return map;
+            var groupedResult = inputList.GroupBy(input => input.Value).ToDictionary(group => group.Key, group => group.ToList());
+            return groupedResult;
         }
     }
 }
