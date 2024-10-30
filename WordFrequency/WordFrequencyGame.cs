@@ -11,16 +11,10 @@ namespace WordFrequency
         {
             string[] wordList = splitedAndTrim(inputStr);
 
-            if (wordList.Length == 1)
-            {
-                return inputStr + " 1";
-            }
-            else
-            {
-                List<Input> wordFrequency = getWordFrequency(wordList);
+            List<Input> wordFrequency = getWordFrequency(wordList);
 
-                return formatResult(wordFrequency);
-            }
+            return formatResult(wordFrequency);
+            
         }
 
         private static List<Input> getWordFrequency(string[] wordList)
