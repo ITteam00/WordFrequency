@@ -21,24 +21,30 @@ namespace WordFrequency
                 var inputList = GetInputList(splitResult);
 
                 //get the map for the next step of sizing the same word
-                Dictionary<string, List<Input>> map = GroupInputsByValue(inputList);
-                List<Input> list = GetGroupInputList(map);
+                Dictionary<string, List<Input>> groupedInputs = GroupInputsByValue(inputList);
+                List<Input> groupedInputList = GetGroupInputList(groupedInputs);
 
-                inputList = list;
+                groupedInputList.Sort((w1, w2) => w2.WordCount - w1.WordCount);
 
-                inputList.Sort((w1, w2) => w2.WordCount - w1.WordCount);
+                string formattedResult = formatInputs(groupedInputList);
 
-                List<string> strList = new List<string>();
-
-                //stringJoiner joiner = new stringJoiner("\n");
-                foreach (Input w in inputList)
-                {
-                    string s = w.Value + " " + w.WordCount;
-                    strList.Add(s);
-                }
-
-                return string.Join("\n", strList.ToArray());
+                return formattedResult;
             }
+        }
+
+        private static string formatInputs(List<Input> groupedInputList)
+        {
+            List<string> formattedWordCounts = new List<string>();
+
+            //stringJoiner joiner = new stringJoiner("\n");
+            foreach (Input w in groupedInputList)
+            {
+                string s = w.Value + " " + w.WordCount;
+                formattedWordCounts.Add(s);
+            }
+
+            string formattedResult = string.Join("\n", formattedWordCounts.ToArray());
+            return formattedResult;
         }
 
         private static List<Input> GetGroupInputList(Dictionary<string, List<Input>> map)
