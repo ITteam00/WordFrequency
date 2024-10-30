@@ -2,23 +2,13 @@
 {
     public class Input
     {
-        private string value;
-        private int count;
+        public string Value { get; }
+        public int WordCount { get; }
 
-        public Input(string w, int i)
+        public Input(string value, int wordCount)
         {
-            this.value = w;
-            this.count = i;
-        }
-
-        public string Value
-        {
-            get { return this.value; }
-        }
-
-        public int WordCount
-        {
-            get { return this.count; }
+            Value = value;
+            WordCount = wordCount;
         }
     }
 }
