@@ -26,15 +26,7 @@ namespace WordFrequency
 
         private static string formatResult(List<Input> wordFrequency)
         {
-            List<string> strList = new List<string>();
-
-            foreach (Input word in wordFrequency)
-            {
-                string s = word.Value + " " + word.WordCount;
-                strList.Add(s);
-            }
-
-            return string.Join("\n", strList.ToArray());
+            return string.Join("\n", wordFrequency.Select(w => $"{w.Value} {w.WordCount}"));
         }
 
         private static string[] splitedAndTrim(string inputStr)
