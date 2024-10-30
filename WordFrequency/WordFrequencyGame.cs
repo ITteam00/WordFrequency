@@ -13,14 +13,10 @@ namespace WordFrequency
                 return inputStr + " 1";
             }
 
-            //split the input string with 1 to n pieces of spaces
             string[] splitedStrings = Regex.Split(inputStr, @"\s+");
 
-            List<WordInput> inputList = splitedStrings
-                .Select(s => new WordInput(s, 1))
-                .ToList();
+            var inputList = WordInputs(splitedStrings);
 
-            //get the map for the next step of sizing the same word
             Dictionary<string, List<WordInput>> listWordInputMap = GetListMap(inputList);
 
             List<WordInput> list = listWordInputMap
@@ -36,6 +32,14 @@ namespace WordFrequency
                 .ToList();
 
             return string.Join("\n", strList.ToArray());
+        }
+
+        private static List<WordInput> WordInputs(string[] splitedStrings)
+        {
+            List<WordInput> inputList = splitedStrings
+                .Select(s => new WordInput(s, 1))
+                .ToList();
+            return inputList;
         }
 
         private Dictionary<string, List<WordInput>> GetListMap(List<WordInput> inputList)
