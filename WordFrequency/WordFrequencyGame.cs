@@ -17,7 +17,6 @@ namespace WordFrequencyStorage
 
             List<string> strList = getWordListMap(ref inputList);
 
-            //stringJoiner joiner = new stringJoiner("\n");
             foreach (WordFrequency w in inputList)
             {
                 string s = w.getWordName + " " + w.getFrequency;
@@ -66,7 +65,6 @@ namespace WordFrequencyStorage
             Dictionary<string, List<WordFrequency>> map = new Dictionary<string, List<WordFrequency>>();
             foreach (var input in inputList)
             {
-                //       map.computeIfAbsent(input.getValue(), k -> new ArrayList<>()).add(input);
                 if (!map.ContainsKey(input.getWordName))
                 {
                     List<WordFrequency> arr = new List<WordFrequency>();
