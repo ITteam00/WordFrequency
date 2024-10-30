@@ -13,10 +13,6 @@ namespace WordFrequencyStorage
             List<string> filteredList = inputStr.Split(new char[] { ' ', '\t', '\n', '\r' })
                                    .Where(word => !string.IsNullOrWhiteSpace(word))
                                    .ToList();
-            if (filteredList.Count() == 1)
-            {
-                return inputStr + INITIAL_FREQUENCY_STRING;
-            }
 
             List<WordFrequency> inputList = splitInputString(filteredList);
 
