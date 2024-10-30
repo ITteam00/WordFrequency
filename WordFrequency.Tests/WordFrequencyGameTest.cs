@@ -1,4 +1,4 @@
-namespace WordFrequency.Tests
+namespace WordFrequencyStorage.Tests
 {
     public class WordFrequencyGameTest
     {
