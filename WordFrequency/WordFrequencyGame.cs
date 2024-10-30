@@ -10,24 +10,15 @@ namespace WordFrequency
 
         public string GetResult(string inputStr)
         {
-            string[] splitResult = Regex.Split(inputStr, @"\s+");
+            var inputList = GetInputList(inputStr);
+            Dictionary<string, List<Input>> groupedInputs = GroupInputsByValue(inputList);
+            List<Input> groupedInputList = GetGroupInputList(groupedInputs);
 
-            if (splitResult.Length == 1)
-            {
-                return inputStr + SEPARATOR +"1";
-            }
-            else
-            {
-                var inputList = GetInputList(splitResult);
-                Dictionary<string, List<Input>> groupedInputs = GroupInputsByValue(inputList);
-                List<Input> groupedInputList = GetGroupInputList(groupedInputs);
-
-                string formattedResult = formatInputs(groupedInputList);
-                return formattedResult;
-            }
+            string formattedResult = FormatInputs(groupedInputList);
+            return formattedResult;
         }
 
-        private static string formatInputs(List<Input> groupedInputList)
+        private static string FormatInputs(List<Input> groupedInputList)
         {
             List<string> formattedWordCounts = new List<string>();
 
@@ -47,8 +38,9 @@ namespace WordFrequency
             return result;
         }
 
-        private static List<Input> GetInputList(string[] splitResult)
+        private static List<Input> GetInputList(string inputStr)
         {
+            string[] splitResult = Regex.Split(inputStr, @"\s+");
             List<Input> inputList = new List<Input>();
 
             foreach (var s in splitResult)
