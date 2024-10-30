@@ -15,7 +15,6 @@ namespace WordFrequency
 
             List<Input> inputList = CreateInputList(inputStr);
 
-            //get the map for the next step of sizing the same word
             Dictionary<string, List<Input>> map = GetListMap(inputList);
 
             inputList = SortList(map);
@@ -29,7 +28,6 @@ namespace WordFrequency
         {
             List<string> strList = new List<string>();
 
-            //stringJoiner joiner = new stringJoiner("\n");
             foreach (Input w in inputList)
             {
                 string s = w.Value + " " + w.WordCount;
