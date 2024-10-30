@@ -8,12 +8,15 @@ namespace WordFrequencyStorage
     {
         public string GetResult(string inputStr)
         {
-            if (inputStr.Split(new char[] { ' ', '\t', '\n', '\r' }).Where(word => !string.IsNullOrWhiteSpace(word)).Count() == 1)
+            List<string> filteredList = inputStr.Split(new char[] { ' ', '\t', '\n', '\r' })
+                                   .Where(word => !string.IsNullOrWhiteSpace(word))
+                                   .ToList();
+            if (filteredList.Count() == 1)
             {
                 return inputStr + " 1";
             }
 
-            List<WordFrequency> inputList = splitInputString(inputStr);
+            List<WordFrequency> inputList = splitInputString(filteredList);
 
             List<string> strList = getWordListMap(ref inputList);
 
@@ -46,12 +49,10 @@ namespace WordFrequencyStorage
             return strList;
         }
 
-        private static List<WordFrequency> splitInputString(string inputStr)
+        private static List<WordFrequency> splitInputString(List<string> filteredList)
         {
-            string[] arr = inputStr.Split(new char[] { ' ', '\t', '\n', '\r' }).Where(word => !string.IsNullOrWhiteSpace(word)).ToArray();
-
             List<WordFrequency> inputList = new List<WordFrequency>();
-            foreach (var s in arr)
+            foreach (var s in filteredList)
             {
                 WordFrequency input = new WordFrequency(s, 1);
                 inputList.Add(input);
