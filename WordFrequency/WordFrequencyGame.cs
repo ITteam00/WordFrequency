@@ -22,11 +22,7 @@ namespace WordFrequencyStorage
 
             List<string> wordFrequencyList = getWordListMap(ref inputList);
 
-            foreach (WordFrequency wordFrequency in inputList)
-            {
-                string formattedWordFrequency = wordFrequency.getWordName + " " + wordFrequency.getFrequency;
-                wordFrequencyList.Add(formattedWordFrequency);
-            }
+            wordFrequencyList.AddRange(inputList.Select(wordFrequency => wordFrequency.getWordName + " " + wordFrequency.getFrequency));
 
             return string.Join("\n", wordFrequencyList.ToArray());
 
@@ -36,12 +32,9 @@ namespace WordFrequencyStorage
         {
             Dictionary<string, List<WordFrequency>> wordFrequencyMap = GetListMap(inputList);
 
-            List<WordFrequency> sortedWordFrequencyList = new List<WordFrequency>();
-            foreach (var wordFrequencyEntry in wordFrequencyMap)
-            {
-                WordFrequency input = new WordFrequency(wordFrequencyEntry.Key, wordFrequencyEntry.Value.Count);
-                sortedWordFrequencyList.Add(input);
-            }
+            List<WordFrequency> sortedWordFrequencyList = wordFrequencyMap
+                .Select(entry => new WordFrequency(entry.Key, entry.Value.Count))
+                .ToList();
 
             inputList = sortedWordFrequencyList;
 
@@ -51,37 +44,21 @@ namespace WordFrequencyStorage
             return formattedWordFrequencyList;
         }
 
+
         private static List<WordFrequency> splitInputString(List<string> filteredList)
         {
-
-            List<WordFrequency> inputList = new List<WordFrequency>();
-            foreach (var word in filteredList)
-            {
-                WordFrequency input = new WordFrequency(word, INITIAL_FREQUENCY);
-                inputList.Add(input);
-            }
-
-            return inputList;
+            return filteredList
+                .Select(word => new WordFrequency(word, INITIAL_FREQUENCY))
+                .ToList();
         }
+
 
         private Dictionary<string, List<WordFrequency>> GetListMap(List<WordFrequency> inputList)
         {
-            Dictionary<string, List<WordFrequency>> wordFrequencyDictionary = new Dictionary<string, List<WordFrequency>>();
-            foreach (var input in inputList)
-            {
-                if (!wordFrequencyDictionary.ContainsKey(input.getWordName))
-                {
-                    List<WordFrequency> wordFrequencyList = new List<WordFrequency>();
-                    wordFrequencyList.Add(input);
-                    wordFrequencyDictionary.Add(input.getWordName, wordFrequencyList);
-                }
-                else
-                {
-                    wordFrequencyDictionary[input.getWordName].Add(input);
-                }
-            }
-
-            return wordFrequencyDictionary;
+            return inputList
+                .GroupBy(input => input.getWordName)
+                .ToDictionary(group => group.Key, group => group.ToList());
         }
+
     }
 }
