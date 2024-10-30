@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace WordFrequency
 {
@@ -17,26 +18,18 @@ namespace WordFrequency
             else
             {
                 //split the input string with 1 to n pieces of spaces
-                List<Input> inputList = new List<Input>();
-                foreach (var word in wordList)
-                {
-                    Input input = new Input(word, 1);
-                    inputList.Add(input);
-                }
+                List<Input> inputList = (from word in wordList
+                                         let input = new Input(word, 1)
+                                         select input).ToList();
 
                 //get the map for the next step of sizing the same word
-                Dictionary<string, List<Input>> map = GetListMap(inputList);
+                Dictionary<string, List<Input>> wordCountsMap = GetListMap(inputList);
 
-                List<Input> list = new List<Input>();
-                foreach (var entry in map)
-                {
-                    Input input = new Input(entry.Key, entry.Value.Count);
-                    list.Add(input);
-                }
+                List<Input> wordFrequency = (from word in wordCountsMap
+                                    let input = new Input(word.Key, word.Value.Count)
+                                    select input).ToList();
 
-                inputList = list;
-
-                inputList.Sort((w1, w2) => w2.WordCount - w1.WordCount);
+                wordFrequency.Sort((w1, w2) => w2.WordCount - w1.WordCount);
 
                 List<string> strList = new List<string>();
 
