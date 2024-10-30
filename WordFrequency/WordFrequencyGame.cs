@@ -21,15 +21,7 @@ namespace WordFrequency
 
         private static List<string> GetWordFrequencyList(List<Input> inputList)
         {
-            List<string> strList = new List<string>();
-
-            foreach (Input w in inputList)
-            {
-                string s = w.Value + " " + w.WordCount;
-                strList.Add(s);
-            }
-
-            return strList;
+            return inputList.Select(Word => $"{Word.Value} {Word.WordCount}").ToList();
         }
 
         private static List<Input> SortList(Dictionary<string, List<Input>> map)
