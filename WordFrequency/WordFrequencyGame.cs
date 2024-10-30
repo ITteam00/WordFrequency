@@ -20,18 +20,21 @@ namespace WordFrequency
                 var wordFrequency = wordList.GroupBy(word => word)
                     .Select(group => new Input(group.Key, group.Count()))
                     .OrderByDescending(input => input.WordCount).ToList();
-
-                List<string> strList = new List<string>();
-
-                //stringJoiner joiner = new stringJoiner("\n");
-                foreach (Input word in wordFrequency)
-                {
-                    string s = word.Value + " " + word.WordCount;
-                    strList.Add(s);
-                }
-
-                return string.Join("\n", strList.ToArray());
+                return formatResult(wordFrequency);
             }
+        }
+
+        private static string formatResult(List<Input> wordFrequency)
+        {
+            List<string> strList = new List<string>();
+
+            foreach (Input word in wordFrequency)
+            {
+                string s = word.Value + " " + word.WordCount;
+                strList.Add(s);
+            }
+
+            return string.Join("\n", strList.ToArray());
         }
 
         private static string[] splitedAndTrim(string inputStr)
