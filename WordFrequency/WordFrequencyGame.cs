@@ -8,19 +8,19 @@ namespace WordFrequency
     {
         public string GetResult(string inputStr)
         {
-            if (Regex.Split(inputStr, @"\s+").Length == 1)
+            string[] wordList = splitedAndTrim(inputStr);
+
+            if (wordList.Length == 1)
             {
                 return inputStr + " 1";
             }
             else
             {
                 //split the input string with 1 to n pieces of spaces
-                string[] arr = Regex.Split(inputStr, @"\s+");
-
                 List<Input> inputList = new List<Input>();
-                foreach (var s in arr)
+                foreach (var word in wordList)
                 {
-                    Input input = new Input(s, 1);
+                    Input input = new Input(word, 1);
                     inputList.Add(input);
                 }
 
@@ -49,6 +49,11 @@ namespace WordFrequency
 
                 return string.Join("\n", strList.ToArray());
             }
+        }
+
+        private static string[] splitedAndTrim(string inputStr)
+        {
+            return Regex.Split(inputStr.Trim(), @"\s+");
         }
 
         private Dictionary<string, List<Input>> GetListMap(List<Input> inputList)
