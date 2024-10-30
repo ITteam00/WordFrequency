@@ -8,11 +8,6 @@ namespace WordFrequency
     {
         public string GetResult(string inputStr)
         {
-            if (Regex.Split(inputStr, @"\s+").Length == 1)
-            {
-                return inputStr + " 1";
-            }
-
             List<Input> inputList = CreateInputList(inputStr);
 
             Dictionary<string, List<Input>> map = GetListMap(inputList);
@@ -75,14 +70,10 @@ namespace WordFrequency
         {
             if (!map.ContainsKey(input.Value))
             {
-                List<Input> arr = new List<Input>();
-                arr.Add(input);
-                map.Add(input.Value, arr);
+                map[input.Value] = new List<Input>();
+
             }
-            else
-            {
-                map[input.Value].Add(input);
-            }
+            map[input.Value].Add(input);
         }
     }
 }
