@@ -65,19 +65,24 @@ namespace WordFrequency
             Dictionary<string, List<Input>> map = new Dictionary<string, List<Input>>();
             foreach (var input in inputList)
             {
-                if (!map.ContainsKey(input.Value))
-                {
-                    List<Input> arr = new List<Input>();
-                    arr.Add(input);
-                    map.Add(input.Value, arr);
-                }
-                else
-                {
-                    map[input.Value].Add(input);
-                }
+                AddInputToMap(map, input);
             }
 
             return map;
+        }
+
+        private static void AddInputToMap(Dictionary<string, List<Input>> map, Input input)
+        {
+            if (!map.ContainsKey(input.Value))
+            {
+                List<Input> arr = new List<Input>();
+                arr.Add(input);
+                map.Add(input.Value, arr);
+            }
+            else
+            {
+                map[input.Value].Add(input);
+            }
         }
     }
 }
