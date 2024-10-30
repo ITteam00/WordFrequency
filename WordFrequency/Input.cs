@@ -1,24 +1,14 @@
 ﻿namespace WordFrequency
 {
-    public class Input
+    public class WordCount
     {
-        private string value;
-        private int count;
+        public string Word { get; }
+        public int Count { get; }
 
-        public Input(string w, int i)
+        public WordCount(string word, int count)
         {
-            this.value = w;
-            this.count = i;
-        }
-
-        public string Value
-        {
-            get { return this.value; }
-        }
-
-        public int WordCount
-        {
-            get { return this.count; }
+            Word = word;
+            Count = count;
         }
     }
 }
