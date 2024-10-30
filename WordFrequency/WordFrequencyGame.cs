@@ -39,21 +39,9 @@ namespace WordFrequency
 
         private static List<Input> AggregateWordCounts(List<Input> inputList)
         {
-            var wordCountDict = new Dictionary<string, int>();
-
-            foreach (var input in inputList)
-            {
-                if (wordCountDict.ContainsKey(input.Value))
-                {
-                    wordCountDict[input.Value]++;
-                }
-                else
-                {
-                    wordCountDict[input.Value] = 1;
-                }
-            }
-
-            return wordCountDict.Select(entry => new Input(entry.Key, entry.Value)).ToList();
+            return inputList.GroupBy(input => input.Value)
+                            .Select(group => new Input(group.Key, group.Count()))
+                            .ToList();
         }
     }
 }
