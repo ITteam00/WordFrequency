@@ -21,14 +21,11 @@ namespace WordFrequency
                 .ToList();
 
             //get the map for the next step of sizing the same word
-            Dictionary<string, List<WordInput>> map = GetListMap(inputList);
+            Dictionary<string, List<WordInput>> listWordInputMap = GetListMap(inputList);
 
-            List<WordInput> list = new List<WordInput>();
-            foreach (var entry in map)
-            {
-                WordInput wordInput = new WordInput(entry.Key, entry.Value.Count);
-                list.Add(wordInput);
-            }
+            List<WordInput> list = listWordInputMap
+                .Select(entry => new WordInput(entry.Key, entry.Value.Count))
+                .ToList();
 
             inputList = list;
 
