@@ -16,21 +16,21 @@ namespace WordFrequency
             //split the input string with 1 to n pieces of spaces
             string[] arr = Regex.Split(inputStr, @"\s+");
 
-            List<Input> inputList = new List<Input>();
+            List<WordInput> inputList = new List<WordInput>();
             foreach (var s in arr)
             {
-                Input input = new Input(s, 1);
-                inputList.Add(input);
+                WordInput wordInput = new WordInput(s, 1);
+                inputList.Add(wordInput);
             }
 
             //get the map for the next step of sizing the same word
-            Dictionary<string, List<Input>> map = GetListMap(inputList);
+            Dictionary<string, List<WordInput>> map = GetListMap(inputList);
 
-            List<Input> list = new List<Input>();
+            List<WordInput> list = new List<WordInput>();
             foreach (var entry in map)
             {
-                Input input = new Input(entry.Key, entry.Value.Count);
-                list.Add(input);
+                WordInput wordInput = new WordInput(entry.Key, entry.Value.Count);
+                list.Add(wordInput);
             }
 
             inputList = list;
@@ -40,18 +40,18 @@ namespace WordFrequency
             List<string> strList = new List<string>();
 
             //stringJoiner joiner = new stringJoiner("\n");
-            foreach (Input w in inputList)
+            foreach (WordInput w in inputList)
             {
-                string s = w.Value + " " + w.WordCount;
+                string s = w.WordValue + " " + w.WordCount;
                 strList.Add(s);
             }
 
             return string.Join("\n", strList.ToArray());
         }
 
-        private Dictionary<string, List<Input>> GetListMap(List<Input> inputList)
+        private Dictionary<string, List<WordInput>> GetListMap(List<WordInput> inputList)
         {
-            return inputList.GroupBy(input => input.Value)
+            return inputList.GroupBy(input => input.WordValue)
                 .ToDictionary(group => group.Key, group => group.ToList());
         }
     }
