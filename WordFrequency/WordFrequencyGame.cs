@@ -10,9 +10,9 @@ namespace WordFrequency
         {
             List<Input> inputList = CreateInputList(inputStr);
 
-            Dictionary<string, List<Input>> map = GetListMap(inputList);
+            List<Input> InputCountList = AggregateWordCounts(inputList);
 
-            inputList = SortList(map);
+            inputList = SortList(InputCountList);
 
             List<string> strList = GetWordFrequencyList(inputList);
 
@@ -24,20 +24,10 @@ namespace WordFrequency
             return inputList.Select(Word => $"{Word.Value} {Word.WordCount}").ToList();
         }
 
-        private static List<Input> SortList(Dictionary<string, List<Input>> map)
+        private static List<Input> SortList(List<Input> inputList)
         {
-            List<Input> inputList;
-            List<Input> list = new List<Input>();
-            foreach (var entry in map)
-            {
-                Input input = new Input(entry.Key, entry.Value.Count);
-                list.Add(input);
-            }
+            return inputList.OrderByDescending(Word => Word.WordCount).ToList();
 
-            inputList = list;
-
-            inputList.Sort((w1, w2) => w2.WordCount - w1.WordCount);
-            return inputList;
         }
 
         private static List<Input> CreateInputList(string inputStr)
@@ -47,25 +37,23 @@ namespace WordFrequency
             return arr.Select(s => new Input(s, 1)).ToList();
         }
 
-        private Dictionary<string, List<Input>> GetListMap(List<Input> inputList)
+        private static List<Input> AggregateWordCounts(List<Input> inputList)
         {
-            Dictionary<string, List<Input>> map = new Dictionary<string, List<Input>>();
+            var wordCountDict = new Dictionary<string, int>();
+
             foreach (var input in inputList)
             {
-                AddInputToMap(map, input);
+                if (wordCountDict.ContainsKey(input.Value))
+                {
+                    wordCountDict[input.Value]++;
+                }
+                else
+                {
+                    wordCountDict[input.Value] = 1;
+                }
             }
 
-            return map;
-        }
-
-        private static void AddInputToMap(Dictionary<string, List<Input>> map, Input input)
-        {
-            if (!map.ContainsKey(input.Value))
-            {
-                map[input.Value] = new List<Input>();
-
-            }
-            map[input.Value].Add(input);
+            return wordCountDict.Select(entry => new Input(entry.Key, entry.Value)).ToList();
         }
     }
 }
