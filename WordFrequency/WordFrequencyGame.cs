@@ -57,14 +57,7 @@ namespace WordFrequency
         {
             string[] arr = Regex.Split(inputStr, @"\s+");
 
-            List<Input> inputList = new List<Input>();
-            foreach (var s in arr)
-            {
-                Input input = new Input(s, 1);
-                inputList.Add(input);
-            }
-
-            return inputList;
+            return arr.Select(s => new Input(s, 1)).ToList();
         }
 
         private Dictionary<string, List<Input>> GetListMap(List<Input> inputList)
