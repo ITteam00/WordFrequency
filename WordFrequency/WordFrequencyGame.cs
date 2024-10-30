@@ -6,6 +6,8 @@ namespace WordFrequencyStorage
 {
     public class WordFrequencyGame
     {
+        private const int INITIAL_FREQUENCY = 1;
+        private const string INITIAL_FREQUENCY_STRING = " 1";
         public string GetResult(string inputStr)
         {
             List<string> filteredList = inputStr.Split(new char[] { ' ', '\t', '\n', '\r' })
@@ -13,7 +15,7 @@ namespace WordFrequencyStorage
                                    .ToList();
             if (filteredList.Count() == 1)
             {
-                return inputStr + " 1";
+                return inputStr + INITIAL_FREQUENCY_STRING;
             }
 
             List<WordFrequency> inputList = splitInputString(filteredList);
@@ -51,10 +53,11 @@ namespace WordFrequencyStorage
 
         private static List<WordFrequency> splitInputString(List<string> filteredList)
         {
+
             List<WordFrequency> inputList = new List<WordFrequency>();
             foreach (var word in filteredList)
             {
-                WordFrequency input = new WordFrequency(word, 1);
+                WordFrequency input = new WordFrequency(word, INITIAL_FREQUENCY);
                 inputList.Add(input);
             }
 
