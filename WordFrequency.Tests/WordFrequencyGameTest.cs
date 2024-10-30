@@ -64,5 +64,50 @@ namespace WordFrequencyStorage.Tests
             //Then
             Assert.Equal(expectResult, actualResult);
         }
+
+        [Fact]
+        public void Should_process_empty_string()
+        {
+            //Given
+            string inputStr = "";
+            string expectResult = "";
+            Validate_Input_words_process_to_expected_word(inputStr, expectResult);
+        }
+
+        [Fact]
+        public void Should_process_single_word_with_multiple_spaces()
+        {
+            //Given
+            string inputStr = "   word   ";
+            string expectResult = "word 1";
+            Validate_Input_words_process_to_expected_word(inputStr, expectResult);
+        }
+
+        [Fact]
+        public void Should_process_multiple_words_with_mixed_case()
+        {
+            //Given
+            string inputStr = "Word word WORD";
+            string expectResult = "Word 1\nword 1\nWORD 1";
+            Validate_Input_words_process_to_expected_word(inputStr, expectResult);
+        }
+
+        [Fact]
+        public void Should_process_words_with_punctuation()
+        {
+            //Given
+            string inputStr = "hello, world! hello.";
+            string expectResult = "hello, 1\nworld! 1\nhello. 1";
+            Validate_Input_words_process_to_expected_word(inputStr, expectResult);
+        }
+
+        [Fact]
+        public void Should_process_words_with_numbers()
+        {
+            //Given
+            string inputStr = "word1 word2 word1";
+            string expectResult = "word1 2\nword2 1";
+            Validate_Input_words_process_to_expected_word(inputStr, expectResult);
+        }
     }
 }
