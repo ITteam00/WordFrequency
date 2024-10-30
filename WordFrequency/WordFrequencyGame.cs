@@ -17,11 +17,17 @@ namespace WordFrequency
             }
             else
             {
-                var wordFrequency = wordList.GroupBy(word => word)
-                    .Select(group => new Input(group.Key, group.Count()))
-                    .OrderByDescending(input => input.WordCount).ToList();
+                List<Input> wordFrequency = getWordFrequency(wordList);
+
                 return formatResult(wordFrequency);
             }
+        }
+
+        private static List<Input> getWordFrequency(string[] wordList)
+        {
+            return wordList.GroupBy(word => word)
+                .Select(group => new Input(group.Key, group.Count()))
+                .OrderByDescending(input => input.WordCount).ToList();
         }
 
         private static string formatResult(List<Input> wordFrequency)
