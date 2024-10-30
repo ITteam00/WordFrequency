@@ -12,18 +12,24 @@ namespace WordFrequencyStorage
             {
                 return inputStr + " 1";
             }
-        
-            //split the input string with 1 to n pieces of spaces
-            string[] arr = Regex.Split(inputStr, @"\s+");
 
-            List<WordFrequency> inputList = new List<WordFrequency>();
-            foreach (var s in arr)
+            List<WordFrequency> inputList = splitInputString(inputStr);
+
+            List<string> strList = getWordListMap(ref inputList);
+
+            //stringJoiner joiner = new stringJoiner("\n");
+            foreach (WordFrequency w in inputList)
             {
-                WordFrequency input = new WordFrequency(s, 1);
-                inputList.Add(input);
+                string s = w.getWordName + " " + w.getFrequency;
+                strList.Add(s);
             }
 
-            //get the map for the next step of sizing the same word
+            return string.Join("\n", strList.ToArray());
+
+        }
+
+        private List<string> getWordListMap(ref List<WordFrequency> inputList)
+        {
             Dictionary<string, List<WordFrequency>> map = GetListMap(inputList);
 
             List<WordFrequency> list = new List<WordFrequency>();
@@ -38,16 +44,21 @@ namespace WordFrequencyStorage
             inputList.Sort((w1, w2) => w2.getFrequency - w1.getFrequency);
 
             List<string> strList = new List<string>();
+            return strList;
+        }
 
-            //stringJoiner joiner = new stringJoiner("\n");
-            foreach (WordFrequency w in inputList)
+        private static List<WordFrequency> splitInputString(string inputStr)
+        {
+            string[] arr = Regex.Split(inputStr, @"\s+");
+
+            List<WordFrequency> inputList = new List<WordFrequency>();
+            foreach (var s in arr)
             {
-                string s = w.getWordName + " " + w.getFrequency;
-                strList.Add(s);
+                WordFrequency input = new WordFrequency(s, 1);
+                inputList.Add(input);
             }
 
-            return string.Join("\n", strList.ToArray());
-            
+            return inputList;
         }
 
         private Dictionary<string, List<WordFrequency>> GetListMap(List<WordFrequency> inputList)
