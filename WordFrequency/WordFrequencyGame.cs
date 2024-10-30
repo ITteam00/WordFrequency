@@ -6,70 +6,50 @@ namespace WordFrequency
 {
     public class WordFrequencyGame
     {
+        private const string SEPARATOR = " ";
+
         public string GetResult(string inputStr)
         {
-            if (Regex.Split(inputStr, @"\s+").Length == 1)
-            {
-                return inputStr + " 1";
-            }
-            else
-            {
-                //split the input string with 1 to n pieces of spaces
-                string[] arr = Regex.Split(inputStr, @"\s+");
+            var inputList = GetInputList(inputStr);
+            Dictionary<string, List<Input>> groupedInputs = GroupInputsByValue(inputList);
+            List<Input> groupedInputList = GetGroupInputList(groupedInputs);
 
-                List<Input> inputList = new List<Input>();
-                foreach (var s in arr)
-                {
-                    Input input = new Input(s, 1);
-                    inputList.Add(input);
-                }
-
-                //get the map for the next step of sizing the same word
-                Dictionary<string, List<Input>> map = GetListMap(inputList);
-
-                List<Input> list = new List<Input>();
-                foreach (var entry in map)
-                {
-                    Input input = new Input(entry.Key, entry.Value.Count);
-                    list.Add(input);
-                }
-
-                inputList = list;
-
-                inputList.Sort((w1, w2) => w2.WordCount - w1.WordCount);
-
-                List<string> strList = new List<string>();
-
-                //stringJoiner joiner = new stringJoiner("\n");
-                foreach (Input w in inputList)
-                {
-                    string s = w.Value + " " + w.WordCount;
-                    strList.Add(s);
-                }
-
-                return string.Join("\n", strList.ToArray());
-            }
+            string formattedResult = FormatInputs(groupedInputList);
+            return formattedResult;
         }
 
-        private Dictionary<string, List<Input>> GetListMap(List<Input> inputList)
+        public string FormatInputs(List<Input> groupedInputList)
         {
-            Dictionary<string, List<Input>> map = new Dictionary<string, List<Input>>();
-            foreach (var input in inputList)
-            {
-                //       map.computeIfAbsent(input.getValue(), k -> new ArrayList<>()).add(input);
-                if (!map.ContainsKey(input.Value))
-                {
-                    List<Input> arr = new List<Input>();
-                    arr.Add(input);
-                    map.Add(input.Value, arr);
-                }
-                else
-                {
-                    map[input.Value].Add(input);
-                }
-            }
+            List<string> formattedWordCounts = new List<string>();
 
-            return map;
+            foreach (Input w in groupedInputList)
+            {
+                string s = w.Word + SEPARATOR + w.WordCount;
+                formattedWordCounts.Add(s);
+            }
+            string formattedResult = string.Join("\n", formattedWordCounts.ToArray());
+            return formattedResult;
+        }
+
+        public List<Input> GetGroupInputList(Dictionary<string, List<Input>> map)
+        {
+            var result =  map.Select(entry => new Input(entry.Key, entry.Value.Count)).ToList();
+            result.Sort((w1, w2) => w2.WordCount - w1.WordCount);
+            return result;
+        }
+
+        public List<Input> GetInputList(string inputStr)
+        {
+            string[] splitResult = Regex.Split(inputStr, @"\s+");
+            List<Input> inputList = inputList = splitResult.Select(word => new Input(word, 1)).ToList();
+
+            return inputList;
+        }
+
+        public Dictionary<string, List<Input>> GroupInputsByValue(List<Input> inputList)
+        {
+            var groupedResult = inputList.GroupBy(input => input.Word).ToDictionary(group => group.Key, group => group.ToList());
+            return groupedResult;
         }
     }
 }
