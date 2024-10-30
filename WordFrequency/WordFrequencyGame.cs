@@ -8,25 +8,25 @@ namespace WordFrequency
     {
         public string GetResult(string inputStr)
         {
-            List<WordCount> inputList = CreateInputList(inputStr);
+            List<WordCount> WordList = CreateInputList(inputStr);
 
-            List<WordCount> InputCountList = AggregateWordCounts(inputList);
+            List<WordCount> WordCountList = AggregateWordCounts(WordList);
 
-            inputList = SortList(InputCountList);
+            WordCountList = SortList(WordCountList);
 
-            List<string> strList = GetWordFrequencyList(inputList);
+            List<string> strList = GetWordFrequencyList(WordCountList);
 
             return string.Join("\n", strList.ToArray());
         }
 
-        private static List<string> GetWordFrequencyList(List<WordCount> inputList)
+        private static List<string> GetWordFrequencyList(List<WordCount> WordList)
         {
-            return inputList.Select(curWord => $"{curWord.Word} {curWord.Count}").ToList();
+            return WordList.Select(curWord => $"{curWord.Word} {curWord.Count}").ToList();
         }
 
-        private static List<WordCount> SortList(List<WordCount> inputList)
+        private static List<WordCount> SortList(List<WordCount> WordList)
         {
-            return inputList.OrderByDescending(curWord => curWord.Count).ToList();
+            return WordList.OrderByDescending(curWord => curWord.Count).ToList();
 
         }
 
@@ -37,9 +37,9 @@ namespace WordFrequency
             return arr.Select(s => new WordCount(s, 1)).ToList();
         }
 
-        private static List<WordCount> AggregateWordCounts(List<WordCount> inputList)
+        private static List<WordCount> AggregateWordCounts(List<WordCount> WordList)
         {
-            return inputList.GroupBy(curWord => curWord.Word)
+            return WordList.GroupBy(curWord => curWord.Word)
                             .Select(group => new WordCount(group.Key, group.Count()))
                             .ToList();
         }
