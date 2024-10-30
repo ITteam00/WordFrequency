@@ -8,11 +8,6 @@ namespace WordFrequency
     {
         public string GetResult(string inputStr)
         {
-            if (inputStr.Length == 1)
-            {
-                return inputStr + " 1";
-            }
-
             string[] splitedStrings = Regex.Split(inputStr, @"\s+");
 
             var inputList = WordInputs(splitedStrings);
