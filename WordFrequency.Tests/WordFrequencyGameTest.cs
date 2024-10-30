@@ -2,66 +2,24 @@ namespace WordFrequency.Tests
 {
     public class WordFrequencyGameTest
     {
-        [Fact]
-        public void Should_get_the_1_when_input_the()
+        [Theory]
+        [InlineData("the", "the 1")]
+        [InlineData("the is", "the 1\nis 1")]
+        [InlineData("the      is", "the 1\nis 1")]
+        [InlineData("the   \n   is", "the 1\nis 1")]
+        [InlineData("the the is", "the 2\nis 1")]
+        [InlineData("the is is", "is 2\nthe 1")]
+        public void ShouldProcessInputWordsCorrectly(string inputStr, string expectResult)
         {
-            //Given
-            string inputStr = "the";
-            string expectResult = "the 1";
-            Validate_Input_words_process_to_expected_word(inputStr, expectResult);
+            ValidateInputWordsProcessToExpectedWord(inputStr, expectResult);
         }
 
-        [Fact]
-        public void Should_process_two_words()
-        {
-            //Given
-            string inputStr = "the is";
-            string expectResult = "the 1\nis 1";
-            Validate_Input_words_process_to_expected_word(inputStr, expectResult);
-        }
-
-        [Fact]
-        public void Should_process_two_words_with_special_spaces()
-        {
-            //Given
-            string inputStr = "the      is";
-            string expectResult = "the 1\nis 1";
-            Validate_Input_words_process_to_expected_word(inputStr, expectResult);
-        }
-
-        [Fact]
-        public void Should_process_two_words_with_special_enter()
-        {
-            //Given
-            string inputStr = "the   \n   is";
-            string expectResult = "the 1\nis 1";
-            Validate_Input_words_process_to_expected_word(inputStr, expectResult);
-        }
-
-        [Fact]
-        public void Should_pracess_two_same_words_with_sorted()
-        {
-            //Given
-            string inputStr = "the the is";
-            string expectResult = "the 2\nis 1";
-            Validate_Input_words_process_to_expected_word(inputStr, expectResult);
-        }
-
-        [Fact]
-        public void Should_process_sorted_with_count_descending()
-        {
-            //Given
-            string inputStr = "the is is";
-            string expectResult = "is 2\nthe 1";
-            Validate_Input_words_process_to_expected_word(inputStr, expectResult);
-        }
-
-        private void Validate_Input_words_process_to_expected_word(string inputStr, string expectResult)
+        private void ValidateInputWordsProcessToExpectedWord(string inputStr, string expectResult)
         {
             WordFrequencyGame game = new WordFrequencyGame();
-            //When
+            // When
             string actualResult = game.GetResult(inputStr);
-            //Then
+            // Then
             Assert.Equal(expectResult, actualResult);
         }
     }
