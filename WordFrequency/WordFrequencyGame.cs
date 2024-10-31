@@ -11,7 +11,8 @@
 
             List<WordFrequency> inputList = splitInputString(filteredList);
 
-            List<string> wordFrequencyList = getWordListMap(ref inputList);
+            List<string> wordFrequencyList = new List<string>();
+            SortWordFrequencies(ref inputList);
 
             wordFrequencyList.AddRange(inputList.Select(wordFrequency => wordFrequency.getWordName + " " + wordFrequency.getFrequency));
 
@@ -19,7 +20,7 @@
 
         }
 
-        private List<string> getWordListMap(ref List<WordFrequency> inputList)
+        private void SortWordFrequencies(ref List<WordFrequency> inputList)
         {
             Dictionary<string, List<WordFrequency>> wordFrequencyMap = GetListMap(inputList);
 
@@ -31,8 +32,7 @@
 
             inputList.Sort((firstWordFrequency, secondWordFrequency) => secondWordFrequency.getFrequency - firstWordFrequency.getFrequency);
 
-            List<string> formattedWordFrequencyList = new List<string>();
-            return formattedWordFrequencyList;
+            return;
         }
 
 
